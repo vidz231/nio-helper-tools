@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SCV Validation Visualizer</title>
+  <style>
+    :root {
+      --ink: #17211f;
+      --muted: #65736f;
+      --paper: #f5f1e8;
+      --panel: rgba(255, 252, 244, 0.9);
+      --line: #d9d0bf;
+      --green: #287a52;
+      --red: #b53b35;
+      --amber: #ad6b18;
+      --blue: #285d7a;
+      --shadow: 0 24px 80px rgba(57, 46, 25, 0.18);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font: 15px/1.45 "Avenir Next", "Trebuchet MS", Verdana, sans-serif;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(255, 188, 87, 0.28), transparent 32rem),
+        radial-gradient(circle at 85% 12%, rgba(57, 130, 115, 0.24), transparent 28rem),
+        linear-gradient(135deg, #efe6d3 0%, #f7f1e4 42%, #e7ede4 100%);
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1320px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 34px 0 50px;
+    }
+
+    header {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .hero, .control, .card, .log-panel {
+      background: var(--panel);
+      border: 1px solid rgba(80, 70, 45, 0.16);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero {
+      border-radius: 28px;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -80px;
+      width: 260px;
+      height: 260px;
+      border-radius: 999px;
+      border: 36px solid rgba(40, 122, 82, 0.12);
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    h1 {
+      margin: 8px 0 12px;
+      font: 800 42px/1.02 Georgia, "Times New Roman", serif;
+      letter-spacing: -0.04em;
+      max-width: 780px;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: var(--muted);
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .control {
+      border-radius: 28px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .rpm-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .rpm-fields label {
+      display: grid;
+      gap: 6px;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 13px 14px;
+      background: #fffaf0;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 0.6fr;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-weight: 850;
+      cursor: pointer;
+      color: white;
+      background: var(--green);
+      transition: transform 0.16s ease, filter 0.16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    button:disabled { cursor: not-allowed; opacity: 0.55; transform: none; }
+    button.secondary { background: #6f5a38; }
+
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 6px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(101, 115, 111, 0.12);
+      color: var(--muted);
+    }
+
+    .badge::before {
+      content: "";
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .badge.PASS { background: rgba(40, 122, 82, 0.14); color: var(--green); }
+    .badge.PASS_WITH_NOTES { background: rgba(173, 107, 24, 0.14); color: var(--amber); }
+    .badge.FAIL, .badge.BLOCKED { background: rgba(181, 59, 53, 0.14); color: var(--red); }
+    .badge.RUNNING, .badge.QUEUED { background: rgba(40, 93, 122, 0.14); color: var(--blue); }
+    .badge.CANCELLED { background: rgba(173, 107, 24, 0.14); color: var(--amber); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .card h2 {
+      margin: 0 0 15px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 9px;
+    }
+
+    .step {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.42);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .step.active {
+      color: var(--blue);
+      border-color: rgba(40, 93, 122, 0.35);
+      background: rgba(40, 93, 122, 0.08);
+      font-weight: 850;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 96px;
+      padding: 14px;
+      border-radius: 18px;
+      background: #fffaf0;
+      border: 1px solid var(--line);
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 9px;
+      font-size: 23px;
+      letter-spacing: -0.04em;
+    }
+
+    .paths {
+      display: grid;
+      gap: 8px;
+    }
+
+    .path {
+      overflow-wrap: anywhere;
+      padding: 10px 12px;
+      border-radius: 13px;
+      background: #fffaf0;
+      border: 1px solid var(--line);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 12px;
+    }
+
+    .artifact-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: end;
+    }
+
+    .artifact-row button {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: var(--blue);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .log-panel {
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    .log-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      height: 420px;
+      overflow: auto;
+      background: #151a17;
+      color: #e8f2df;
+      font: 12px/1.45 "SFMono-Regular", Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .preview {
+      white-space: pre;
+      max-height: 260px;
+      overflow: auto;
+      padding: 14px;
+      border-radius: 16px;
+      background: #fffaf0;
+      border: 1px solid var(--line);
+      font: 12px/1.4 "SFMono-Regular", Consolas, monospace;
+    }
+
+    dialog {
+      width: min(1100px, calc(100vw - 32px));
+      max-height: min(820px, calc(100vh - 32px));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 0;
+      box-shadow: var(--shadow);
+      background: #fffaf0;
+      color: var(--ink);
+    }
+
+    dialog::backdrop {
+      background: rgba(23, 33, 31, 0.46);
+      backdrop-filter: blur(4px);
+    }
+
+    .dialog-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .dialog-head h2 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .dialog-body {
+      margin: 0;
+      height: min(680px, calc(100vh - 150px));
+      overflow: auto;
+      padding: 18px;
+      background: #151a17;
+      color: #e8f2df;
+      font: 12px/1.45 "SFMono-Regular", Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .math-panel {
+      display: grid;
+      gap: 14px;
+      padding: 18px;
+      max-height: min(700px, calc(100vh - 130px));
+      overflow: auto;
+      background: #fffaf0;
+      color: #17211f;
+      font-family: "Avenir Next", "Trebuchet MS", Verdana, sans-serif;
+      white-space: normal;
+    }
+
+    .math-block {
+      border: 1px solid #c7b99f;
+      border-radius: 16px;
+      padding: 14px;
+      background: #fffdf8;
+      color: #17211f;
+    }
+
+    .math-block h3 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      color: #17211f;
+    }
+
+    .math-block p {
+      margin: 5px 0 12px;
+      color: #2f3d39;
+    }
+
+    .math-block code {
+      display: block;
+      padding: 9px 10px;
+      margin-top: 7px;
+      border-radius: 10px;
+      background: #151a17;
+      color: #e8f2df;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: baseline;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(70, 78, 74, 0.28);
+      color: #17211f;
+    }
+
+    .check:last-child { border-bottom: 0; }
+    .check strong.pass { color: #12643f; }
+    .check strong.fail { color: #9f241d; }
+
+    @media (max-width: 900px) {
+      header, .grid, .metrics { grid-template-columns: 1fr; }
+      h1 { font-size: 34px; }
+      .shell { width: min(100vw - 24px, 1320px); padding-top: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <section class="hero">
+        <div class="eyebrow">NIO Analytics Offline Harness</div>
+        <h1>SCV Domain Report Validation Visualizer</h1>
+        <p>Run the full preserved-snapshot replay from a button, watch each phase, and inspect the generated SCV domain report without touching live scheduler output paths.</p>
+      </section>
+      <section class="control">
+        <label for="ymd">Replay Day</label>
+        <input id="ymd" value="2026-04-10" pattern="\\d{4}-?\\d{2}-?\\d{2}">
+        <div class="buttons">
+          <button id="run">Run Full Replay</button>
+          <button id="cancel" class="secondary" disabled>Cancel</button>
+        </div>
+        <details>
+          <summary>Manual Jenkins RPM / Scheduler Observation</summary>
+          <div class="rpm-fields">
+            <label>Jenkins URL<input id="jenkinsUrl" placeholder="https://jbuilder..."></label>
+            <label>Build #<input id="buildNumber" placeholder="1234"></label>
+            <label>RPM Version<input id="rpmVersion" placeholder="1.24-0.42"></label>
+            <label>Changeset<input id="changeset" value="feature/scv-domain-reports"></label>
+            <label>Install Hosts<input id="installHosts" value="pocket-ath-mu1,pocket-ath-mu3"></label>
+            <label>Install Time<input id="installTimestamp" placeholder="2026-04-11T..."></label>
+            <label>Install Confirmation<input id="installConfirmation" placeholder="RPM installed on mu1/mu3"></label>
+          </div>
+          <button id="installObserve" class="secondary">Install RPM + Observe</button>
+          <button id="etlObserve" class="secondary">Run ETL + Observe</button>
+          <button id="observeScheduler" class="secondary">Observe Only</button>
+        </details>
+        <div class="status">
+          <span id="badge" class="badge">IDLE</span>
+          <span id="runId">No run yet</span>
+        </div>
+      </section>
+    </header>
+
+    <main class="grid">
+      <section>
+        <div class="card">
+          <h2>Phase Timeline</h2>
+          <div id="timeline" class="timeline"></div>
+        </div>
+        <div class="card">
+          <h2>Artifacts</h2>
+          <div id="paths" class="paths"></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="card">
+          <h2>Metrics</h2>
+          <div id="metrics" class="metrics"></div>
+        </div>
+        <div class="log-panel">
+          <div class="log-head">
+            <strong>Run Log</strong>
+            <button id="downloadLog" class="secondary" disabled>Open Full Log</button>
+          </div>
+          <pre id="log"></pre>
+        </div>
+        <div class="card">
+          <h2>Report Preview</h2>
+          <button id="loadPreview" class="secondary" disabled>Load First 100 Lines</button>
+          <button id="mathCheck" class="secondary" disabled>Verify Math</button>
+          <div id="preview" class="preview">Run must complete before preview is available.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="artifactDialog">
+    <div class="dialog-head">
+      <h2 id="dialogTitle">Artifact</h2>
+      <button id="closeDialog" class="secondary">Close</button>
+    </div>
+    <pre id="dialogBody" class="dialog-body"></pre>
+  </dialog>
+
+  <script>
+    const phases = [
+      "queued",
+      "stage",
+      "unit_tests",
+      "prepare_replay",
+      "copy_mobile_inputs",
+      "copy_fixed_inputs",
+      "merge_tls",
+      "day_matcher",
+      "domain_report",
+      "provenance",
+      "acceptance",
+      "summary"
+    ];
+    const metricLabels = [
+      ["unit_tests", "Unit Tests"],
+      ["merged_mobile_tls", "Merged Mobile TLS"],
+      ["merged_fixed_tls", "Merged Fixed TLS"],
+      ["merged_matches_rows", "Merged Matches"],
+      ["partial_rows", "Partial Rows"],
+      ["final_report_rows", "Final Report Rows"],
+      ["copied_mobile", "Copied Mobile Inputs"],
+      ["copied_fixed", "Copied Fixed Inputs"],
+      ["copied_fixed_userkey", "Fixed Userkey Logs"]
+    ];
+    const pathLabels = [
+      ["replay_root", "Replay Root"],
+      ["merged_matches", "Merged Matches", "merged-matches"],
+      ["partial_feed", "Shard Partial", "partial-feed"],
+      ["partial_master", "Master Partial", "partial-master"],
+      ["final_report", "Final Report", "final-report"],
+      ["scheduler_report", "Scheduler Report", "scheduler-report"],
+      ["day_matcher_module", "Day Matcher Module"],
+      ["domain_report_module", "Domain Report Module"]
+    ];
+
+    let currentRun = null;
+    let pollTimer = null;
+    let eventSource = null;
+
+    const badge = document.getElementById("badge");
+    const runId = document.getElementById("runId");
+    const log = document.getElementById("log");
+    const preview = document.getElementById("preview");
+    const runButton = document.getElementById("run");
+    const observeSchedulerButton = document.getElementById("observeScheduler");
+    const installObserveButton = document.getElementById("installObserve");
+    const etlObserveButton = document.getElementById("etlObserve");
+    const cancelButton = document.getElementById("cancel");
+    const loadPreviewButton = document.getElementById("loadPreview");
+    const mathCheckButton = document.getElementById("mathCheck");
+    const downloadLogButton = document.getElementById("downloadLog");
+    const artifactDialog = document.getElementById("artifactDialog");
+    const dialogTitle = document.getElementById("dialogTitle");
+    const dialogBody = document.getElementById("dialogBody");
+    const closeDialog = document.getElementById("closeDialog");
+
+    function escapeHtml(value) {
+      return String(value ?? "-")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function setBadge(status) {
+      badge.className = `badge ${status}`;
+      badge.textContent = status || "IDLE";
+    }
+
+    function renderTimeline(active) {
+      document.getElementById("timeline").innerHTML = phases.map((phase, index) => {
+        const activeIndex = phases.indexOf(active);
+        const marker = index < activeIndex ? "done" : index === activeIndex ? "now" : "waiting";
+        return `<div class="step ${index === activeIndex ? "active" : ""}"><span>${phase}</span><strong>${marker}</strong></div>`;
+      }).join("");
+    }
+
+    function renderMetrics(metrics = {}) {
+      document.getElementById("metrics").innerHTML = metricLabels.map(([key, label]) => {
+        return `<div class="metric"><span>${escapeHtml(label)}</span><strong>${escapeHtml(metrics[key])}</strong></div>`;
+      }).join("");
+    }
+
+    function renderPaths(metrics = {}) {
+      document.getElementById("paths").innerHTML = pathLabels.map(([key, label, artifact]) => {
+        const canView = artifact && currentRun && ["PASS", "PASS_WITH_NOTES", "BLOCKED"].includes(currentRun.status) && metrics[key];
+        const button = artifact
+          ? `<button data-artifact="${escapeHtml(artifact)}" data-title="${escapeHtml(label)}" ${canView ? "" : "disabled"}>View</button>`
+          : "";
+        return `<div class="artifact-row"><div><label>${escapeHtml(label)}</label><div class="path">${escapeHtml(metrics[key])}</div></div>${button}</div>`;
+      }).join("");
+
+      document.querySelectorAll("[data-artifact]").forEach((button) => {
+        button.addEventListener("click", () => {
+          viewArtifact(button.dataset.artifact, button.dataset.title);
+        });
+      });
+    }
+
+    function renderRun(run) {
+      currentRun = run;
+      setBadge(run.status);
+      runId.textContent = run.id ? `Run ${run.id}` : "No run yet";
+      renderTimeline(run.phase || "queued");
+      renderMetrics(run.metrics);
+      renderPaths(run.metrics);
+      log.textContent = (run.log_tail || []).join("\\n");
+      log.scrollTop = log.scrollHeight;
+      const running = ["QUEUED", "RUNNING"].includes(run.status);
+      runButton.disabled = running;
+      observeSchedulerButton.disabled = running;
+      installObserveButton.disabled = running;
+      etlObserveButton.disabled = running;
+      cancelButton.disabled = !running;
+      loadPreviewButton.disabled = run.status !== "PASS";
+      mathCheckButton.disabled = run.status !== "PASS";
+      downloadLogButton.disabled = !run.id;
+    }
+
+    async function fetchRun(id) {
+      const response = await fetch(`/api/runs/${id}`);
+      if (!response.ok) throw new Error(await response.text());
+      return response.json();
+    }
+
+    async function poll() {
+      if (!currentRun) return;
+      const run = await fetchRun(currentRun.id);
+      renderRun(run);
+      if (!["QUEUED", "RUNNING"].includes(run.status)) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    }
+
+    function stopStreaming() {
+      if (eventSource) {
+        eventSource.close();
+        eventSource = null;
+      }
+    }
+
+    function startStreaming(id) {
+      stopStreaming();
+      eventSource = new EventSource(`/api/runs/${id}/events`);
+      eventSource.addEventListener("state", (event) => {
+        const run = JSON.parse(event.data);
+        renderRun(run);
+        if (!["QUEUED", "RUNNING"].includes(run.status)) {
+          stopStreaming();
+          clearInterval(pollTimer);
+          pollTimer = null;
+        }
+      });
+      eventSource.onerror = () => {
+        stopStreaming();
+        clearInterval(pollTimer);
+        pollTimer = setInterval(poll, 1200);
+      };
+    }
+
+    runButton.addEventListener("click", async () => {
+      preview.textContent = "Run in progress...";
+      const response = await fetch("/api/runs", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({action: "full-pass-replay", ymd: document.getElementById("ymd").value})
+      });
+      const run = await response.json();
+      if (!response.ok) {
+        alert(run.error || "Failed to start run");
+        return;
+      }
+      renderRun(run);
+      clearInterval(pollTimer);
+      pollTimer = setInterval(poll, 5000);
+      startStreaming(run.id);
+    });
+
+    function rpmEvidenceFromForm() {
+      return {
+        jenkins_url: document.getElementById("jenkinsUrl").value,
+        build_number: document.getElementById("buildNumber").value,
+        rpm_version: document.getElementById("rpmVersion").value,
+        changeset: document.getElementById("changeset").value,
+        install_hosts: document.getElementById("installHosts").value,
+        install_timestamp: document.getElementById("installTimestamp").value,
+        install_confirmation: document.getElementById("installConfirmation").value
+      };
+    }
+
+    async function startSchedulerAction(action) {
+      preview.textContent = action === "install-and-observe"
+        ? "RPM install and scheduler observation in progress..."
+        : action === "etl-run-and-observe"
+        ? "Forced ETL run and scheduler observation in progress..."
+        : "Scheduler observation in progress...";
+      const response = await fetch("/api/runs", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          action,
+          ymd: document.getElementById("ymd").value,
+          rpm_evidence: rpmEvidenceFromForm()
+        })
+      });
+      const run = await response.json();
+      if (!response.ok) {
+        alert(run.error || "Failed to start scheduler workflow");
+        return;
+      }
+      renderRun(run);
+      clearInterval(pollTimer);
+      pollTimer = setInterval(poll, 5000);
+      startStreaming(run.id);
+    }
+
+    observeSchedulerButton.addEventListener("click", async () => {
+      startSchedulerAction("scheduler-observe");
+    });
+
+    installObserveButton.addEventListener("click", async () => {
+      startSchedulerAction("install-and-observe");
+    });
+
+    etlObserveButton.addEventListener("click", async () => {
+      startSchedulerAction("etl-run-and-observe");
+    });
+
+    cancelButton.addEventListener("click", async () => {
+      if (!currentRun) return;
+      await fetch(`/api/runs/${currentRun.id}/cancel`, {method: "POST"});
+      await poll();
+    });
+
+    loadPreviewButton.addEventListener("click", async () => {
+      if (!currentRun) return;
+      const response = await fetch(`/api/runs/${currentRun.id}/artifact?name=report-preview`);
+      preview.textContent = await response.text();
+    });
+
+    async function viewArtifact(name, title) {
+      if (!currentRun) return;
+      dialogTitle.textContent = title;
+      dialogBody.className = "dialog-body";
+      dialogBody.textContent = "Fetching artifact from pocket-ath-mu1...";
+      artifactDialog.showModal();
+      const response = await fetch(`/api/runs/${currentRun.id}/artifact?name=${encodeURIComponent(name)}`);
+      const body = await response.text();
+      dialogBody.textContent = response.ok ? body : `Unable to load ${title} (${response.status})\n\n${body}\n\nIf you just updated the visualizer, restart python3 server.py so the backend reloads.`;
+    }
+
+    function renderMathAnalysis(analysis) {
+      if (analysis.error) {
+        return `<div class="math-panel"><div class="math-block"><h3>${escapeHtml(analysis.verdict || "BLOCKED")}</h3><p>${escapeHtml(analysis.error)}</p></div></div>`;
+      }
+      const checks = (analysis.checks || []).map((check) => {
+        const status = check.pass ? "PASS" : "FAIL";
+        const cls = check.pass ? "pass" : "fail";
+        return `<div class="check"><strong class="${cls}">${status}</strong><span>${escapeHtml(check.name)}: ${escapeHtml(check.detail)}</span></div>`;
+      }).join("");
+      const columns = Object.entries(analysis.columns || {}).map(([key, value]) => {
+        return `<div><strong>${escapeHtml(key)}</strong><p>${escapeHtml(value)}</p></div>`;
+      }).join("");
+      const formulas = (analysis.formulas || []).map((formula) => `<code>${escapeHtml(formula)}</code>`).join("");
+      const relationships = (analysis.relationships || []).map((rel) => `<code>${escapeHtml(rel)}</code>`).join("");
+      const totals = JSON.stringify(analysis.totals || {}, null, 2);
+      const samples = JSON.stringify(analysis.samples || [], null, 2);
+      const mismatches = JSON.stringify(analysis.mismatches || [], null, 2);
+      return `
+        <div class="math-panel">
+          <div class="math-block"><h3>Verdict: ${escapeHtml(analysis.verdict)}</h3>${checks}</div>
+          <div class="math-block"><h3>Column Definitions</h3>${columns}</div>
+          <div class="math-block"><h3>Formulas</h3>${formulas}</div>
+          <div class="math-block"><h3>Artifact Relationships</h3>${relationships}</div>
+          <div class="math-block"><h3>Computed Totals</h3><code>${escapeHtml(totals)}</code></div>
+          <div class="math-block"><h3>Sample Rows</h3><code>${escapeHtml(samples)}</code></div>
+          <div class="math-block"><h3>Domain Mismatches</h3><code>${escapeHtml(mismatches)}</code></div>
+        </div>`;
+    }
+
+    mathCheckButton.addEventListener("click", async () => {
+      if (!currentRun) return;
+      dialogTitle.textContent = "Mathematical Report Verification";
+      dialogBody.className = "math-panel";
+      dialogBody.textContent = "Computing report invariants from pocket-ath-mu1...";
+      artifactDialog.showModal();
+      const response = await fetch(`/api/runs/${currentRun.id}/artifact?name=math-analysis`);
+      const analysis = await response.json();
+      dialogBody.innerHTML = renderMathAnalysis(analysis);
+    });
+
+    closeDialog.addEventListener("click", () => {
+      artifactDialog.close();
+    });
+
+    downloadLogButton.addEventListener("click", () => {
+      if (!currentRun) return;
+      window.open(`/api/runs/${currentRun.id}/artifact?name=log`, "_blank");
+    });
+
+    renderTimeline("queued");
+    renderMetrics({});
+    renderPaths({});
+  </script>
+</body>
+</html>

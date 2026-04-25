@@ -1,0 +1,18 @@
+# Ignore everything by default
+*
+
+# Keep this file
+!.gitignore
+
+# Allow personal AI/workflow folders only
+!.agents/
+!.agents/**
+
+!.cursor/
+!.cursor/**
+
+!.github/
+!.github/**
+
+!scv-validation-visualizer/
+!scv-validation-visualizer/**
