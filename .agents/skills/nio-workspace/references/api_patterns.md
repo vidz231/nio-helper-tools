@@ -100,6 +100,7 @@ Key fields:
 - `role`: Deployment role (e.g., `mrs`, `ncore`)
 - `wrap`: `True` for standard request wrapping
 
+
 External routes go in `routes_external.py`.
 
 ## Request Body Handling
