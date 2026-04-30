@@ -4,6 +4,10 @@
 # Keep this file
 !.gitignore
 
+# Keep private workspace docs
+!docs/
+!docs/**
+
 # Allow personal AI/workflow folders only
 !.agents/
 !.agents/**
