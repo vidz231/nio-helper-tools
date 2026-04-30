@@ -1,6 +1,36 @@
 # Mobileum Workspace Agent Routing
 
-This workspace uses project-scoped custom agents under `.codex/agents`.
+This workspace keeps reusable NIO guidance under `.agents/skills`,
+`.agents/subagents`, `.github/agents`, and `.cursor/agents`.
+
+## Local Guidance Surfaces
+
+- For broad NIO/Mobileum work, read `.agents/skills/nio-workspace/SKILL.md`
+  before planning repo changes.
+- For `nio-analytics` build, autotools, rbuild, or RPM packaging issues, read
+  `.agents/skills/nio-autotools-rbuild-rpm/SKILL.md`.
+- For installed pocket-host ETL checks, role/source/interval file inspection, or
+  `etl_runner` operations, read `.agents/skills/nio-analytics-explorer/SKILL.md`;
+  default to read-only SSH evidence first and require explicit confirmation
+  before any trigger or write action.
+- `.agents/subagents/*.md` are plain read-only helper prompts. Pass the relevant
+  prompt contents to a helper agent, then append the concrete task; keep each
+  helper scoped to the repositories listed in that prompt.
+- `.github/agents/nio-etl-pipeline.agent.md` captures GitHub Copilot-style
+  guidance for `nio-analytics` ETL pipeline work, including task scheduling,
+  pipeline step ordering, MRS signaling, and build/test commands.
+
+## Common Commands
+
+- From `/Volumes/vidzdatastore/work/mobileum_source`, use
+  `./rbuild.sh <repo> -sb` for the normal stage-and-build loop,
+  `./rbuild.sh <repo> -sAab` after configure/autotools changes, and
+  `./rbuild.sh <repo> -t` for tests.
+- For the SCV validation visualizer, run
+  `python3 server.py` from
+  `/Volumes/vidzdatastore/work/mobileum_source/nio-analytics/offline/scv-validation-visualizer`
+  and open `http://127.0.0.1:8765`. Treat `Install RPM + Observe` and
+  `Run ETL + Observe` as mutating operations on pocket hosts.
 
 For Mobileum and NIO tasks in `/Volumes/vidzdatastore/work/mobileum_source`, prefer `mobileum_coordinator` as the default entrypoint unless the user explicitly asks for a narrower agent by name.
 
