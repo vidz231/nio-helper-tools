@@ -39,6 +39,18 @@ repo.
   when a rerun is explicitly intended. Verify retained inputs first; do not
   promise historical reruns before checking retention.
 
+## Default-Branch Sync
+
+- For clean-start or "latest repo" checks in these linked worktrees, verify the
+  live canonical default branch over HTTPS before trusting cached tracking refs:
+  `git ls-remote --symref https://github.com/phutran2495-cpu/nio-helper-tools.git HEAD refs/heads/main`.
+- If the SSH `upstream` remote stalls during fetch, fetch only the canonical
+  branch over HTTPS:
+  `git fetch https://github.com/phutran2495-cpu/nio-helper-tools.git main:refs/remotes/upstream/main`.
+- If another linked worktree already owns `main`, keep this checkout detached at
+  the verified default-branch commit with `git checkout --detach <commit>` and
+  preserve unrelated local state such as the OMX `.gitignore` entry.
+
 ## SCV Workflows
 
 - For SCV drops or missing reports, start at `docs/scv/README.md`, then use
