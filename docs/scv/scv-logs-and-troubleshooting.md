@@ -176,6 +176,20 @@ If a shell glob does not match, the shell may pass the literal pattern through, 
 
 That happened during the incident discussion and is exactly the kind of recovery noise this runbook should prevent.
 
+## Historical Backfill Runbook
+
+If the issue is a historical missing-shard SCV date and the retained shard raw files still exist, use the dedicated runbook:
+
+- `scv-historical-backfill-runbook.md`
+
+It explains:
+
+- how `count = 0` and manual `task -bump` behave
+- when to use direct `etl_runner.sh` versus `task -import` versus `task -reload-task`
+- how to observe scheduler-imported tasks through queue, audit, `task.log`, and SCV role logs
+- how to repair a fresh historical `2/5` `matches_scv_master` task by bumping for already-present shard outputs
+- why final `scv` may still need `+2` historical bumps for `userkey_scv_master` and `subintel_scv_master`
+
 ## April 24 Incident Pattern
 
 ### Symptom

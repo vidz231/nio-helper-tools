@@ -1,12 +1,16 @@
 # Ignore everything by default
 *
 
+# Keep cloned work repos out of this umbrella workspace repo
+nio-conf-templates/
+
 # Keep this file
 !.gitignore
 
 # Keep private workspace docs
 !docs/
 !docs/**
+docs/.DS_Store
 
 # Allow personal AI/workflow folders only
 !.agents/
