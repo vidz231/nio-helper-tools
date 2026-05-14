@@ -2,7 +2,7 @@
 *
 
 # Keep cloned work repos out of this umbrella workspace repo
-nio-conf-templates/
+
 
 # Keep this file
 !.gitignore
