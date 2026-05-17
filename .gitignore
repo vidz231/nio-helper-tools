@@ -7,6 +7,10 @@
 # Keep this file
 !.gitignore
 
+# Keep requested root files
+!generate_fake_fixed_ottcall.py
+!nio-conf-templates-validation-guide.md
+
 # Keep private workspace docs
 !docs/
 !docs/**
