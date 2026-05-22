@@ -31,6 +31,16 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
   `/Volumes/vidzdatastore/work/mobileum_source/nio-analytics/offline/scv-validation-visualizer`
   and open `http://127.0.0.1:8765`. Treat `Install RPM + Observe` and
   `Run ETL + Observe` as mutating operations on pocket hosts.
+- To generate fixed-broadband OTTCall IPDR test files, run
+  `python3 generate_fake_fixed_ottcall.py --output-dir ./fake_fixed_ipdr`.
+  It writes schema `15109` files named `ipdr_cib_fixed.log.<interval>`; confirm
+  the target host before copying them into `/var/opt/nio/log/raw/`.
+- For `nio-conf-templates` validation, follow
+  `nio-conf-templates-validation-guide.md`. Treat
+  `sudo yum update nio-conf-templates -y`,
+  `sudo /opt/nio/bin/conf sync`, and `sudo systemctl restart ncore` as mutating
+  operations; prefer `sudo /opt/nio/bin/conf regenerate --diff` for previewing
+  rendered config changes.
 
 For Mobileum and NIO tasks in `/Volumes/vidzdatastore/work/mobileum_source`, prefer `mobileum_coordinator` as the default entrypoint unless the user explicitly asks for a narrower agent by name.
 
