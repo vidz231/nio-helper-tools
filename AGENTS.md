@@ -48,6 +48,25 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
   operations; prefer `sudo /opt/nio/bin/conf regenerate --diff` for previewing
   rendered config changes.
 
+## Access And Pocket Probes
+
+- For private Mobileum repos under `mobeande/*`, check
+  `gh auth status -h github.com` before concluding the repo is missing. If
+  `vidz231` cannot see the repo, switch to `Tran-Phu_Mobileum` for the check
+  and restore the previous active account afterward.
+- When SSH fetches fail with `Permission denied (publickey)` or hang through
+  the 1Password SSH-agent path, use a one-off HTTPS fallback:
+  `git -c credential.helper='!gh auth git-credential' -c url."https://github.com/".insteadOf=git@github.com: fetch --prune --tags origin`.
+- For pocket-host access checks, separate DNS, port, and auth before debugging
+  deeper runtime behavior:
+  `dscacheutil -q host -a name <host>.niometrics.com`,
+  `nc -vz -G 5 <host>.niometrics.com 22`, then
+  `ssh -i ~/.ssh/id_rsa phu.tran@<host>.niometrics.com 'hostname && date && id -un'`.
+- Before live `conf-edit` work, inspect `/etc/opt/nio/analytics.json` and
+  `sudo conf show`; derive the edit path from the deployed JSON instead of
+  guessing. Treat `conf-edit`, `conf apply`, and `conf regenerate` as mutating
+  unless the user explicitly approved that action.
+
 ## OTTCall And DNA-15382 Notes
 
 - For mixed FBB/MBB OTTCall impact analysis, keep slide-backed requirements,
