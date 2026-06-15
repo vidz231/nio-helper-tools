@@ -26,11 +26,63 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
   `./rbuild.sh <repo> -sb` for the normal stage-and-build loop,
   `./rbuild.sh <repo> -sAab` after configure/autotools changes, and
   `./rbuild.sh <repo> -t` for tests.
+- For clean-start or "latest repo" checks in these linked worktrees, verify the
+  live default branch before trusting cached refs:
+  `git ls-remote --symref origin HEAD refs/heads/main`, then
+  `git fetch origin --prune --tags`. If another linked worktree owns `main`,
+  keep this checkout detached at `origin/main` instead of disturbing that
+  worktree.
 - For the SCV validation visualizer, run
   `python3 server.py` from
   `/Volumes/vidzdatastore/work/mobileum_source/nio-analytics/offline/scv-validation-visualizer`
   and open `http://127.0.0.1:8765`. Treat `Install RPM + Observe` and
   `Run ETL + Observe` as mutating operations on pocket hosts.
+- To generate fixed-broadband OTTCall IPDR test files from this repo, run
+  `python3 generate_fake_fixed_ottcall.py --output-dir ./fake_fixed_ipdr`.
+  It writes schema `15109` files named `ipdr_cib_fixed.log.<interval>`; confirm
+  the target host before copying them into `/var/opt/nio/log/raw/`.
+- For `nio-conf-templates` validation, follow
+  `nio-conf-templates-validation-guide.md`. Treat
+  `sudo yum update nio-conf-templates -y`,
+  `sudo /opt/nio/bin/conf sync`, and `sudo systemctl restart ncore` as mutating
+  operations; prefer `sudo /opt/nio/bin/conf regenerate --diff` for previewing
+  rendered config changes.
+
+## Access And Pocket Probes
+
+- For private Mobileum repos under `mobeande/*`, check
+  `gh auth status -h github.com` before concluding the repo is missing. If
+  `vidz231` cannot see the repo, switch to `Tran-Phu_Mobileum` for the check
+  and restore the previous active account afterward.
+- When SSH fetches fail with `Permission denied (publickey)` or hang through
+  the 1Password SSH-agent path, use a one-off HTTPS fallback:
+  `git -c credential.helper='!gh auth git-credential' -c url."https://github.com/".insteadOf=git@github.com: fetch --prune --tags origin`.
+- For pocket-host access checks, separate DNS, port, and auth before debugging
+  deeper runtime behavior:
+  `dscacheutil -q host -a name <host>.niometrics.com`,
+  `nc -vz -G 5 <host>.niometrics.com 22`, then
+  `ssh -i ~/.ssh/id_rsa phu.tran@<host>.niometrics.com 'hostname && date && id -un'`.
+- Before live `conf-edit` work, inspect `/etc/opt/nio/analytics.json` and
+  `sudo conf show`; derive the edit path from the deployed JSON instead of
+  guessing. Treat `conf-edit`, `conf apply`, and `conf regenerate` as mutating
+  unless the user explicitly approved that action.
+
+## OTTCall And DNA-15382 Notes
+
+- For mixed FBB/MBB OTTCall impact analysis, keep slide-backed requirements,
+  current runtime facts, and proposed implementation design separate. If the
+  user narrows scope to `nio-analytics` and `nio-conf-templates`, exclude
+  `nio-api3` until they explicitly re-add it.
+- First scoped anchors: `resources/etl/ncore/cubes/unit/ottcall`,
+  `resources/etl/mrs/cubes/unit/ottcall`,
+  `py3/src/lib/python3/nioanalytics/analytics/correlate_ottcall_v3.py`, plus
+  `conf-templates.d/ipdr.conf`, `conf-templates.d/nstored.conf.shared`,
+  `conf-templates.d/nstore.conf.tmpl`, `conf-templates.d/nstore_ipdr.conf.tmpl`,
+  and `conf-templates.d/eventlog.njoin.json.tmpl`.
+- TODO: Document the mixed FBB/MBB MRS replay helper
+  `generate_ncore_ottcall_mrs.py` only after the script and its artifact
+  contract are committed on the target branch. Current evidence came from local
+  feature artifacts, not live `main`.
 
 For Mobileum and NIO tasks in `/Volumes/vidzdatastore/work/mobileum_source`, prefer `mobileum_coordinator` as the default entrypoint unless the user explicitly asks for a narrower agent by name.
 
