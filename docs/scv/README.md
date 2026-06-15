@@ -14,6 +14,7 @@ It focuses on the SCV shard and SCV master TLS-key flow, especially the reportin
 - `scv-tls-flow.md`: execution order and handoff meaning
 - `scv-step-io-reference.md`: important input and output files by step
 - `scv-logs-and-troubleshooting.md`: which logs answer which questions, plus an incident playbook
+- `scv-historical-backfill-runbook.md`: step-by-step historical backfill for missing shard TLS matches, including scheduler import, manual bumps, and example outputs
 - `scv-scope-config.md`: how scope fields are derived in SCV master
 
 ## Start Here When SCV Numbers Drop

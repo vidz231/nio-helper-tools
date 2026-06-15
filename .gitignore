@@ -1,12 +1,20 @@
 # Ignore everything by default
 *
 
+# Keep cloned work repos out of this umbrella workspace repo
+
+
 # Keep this file
 !.gitignore
+
+# Keep requested root files
+!generate_fake_fixed_ottcall.py
+!nio-conf-templates-validation-guide.md
 
 # Keep private workspace docs
 !docs/
 !docs/**
+docs/.DS_Store
 
 # Allow personal AI/workflow folders only
 !.agents/

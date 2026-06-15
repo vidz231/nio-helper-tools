@@ -134,10 +134,6 @@ NIO pipelines follow a **decentralized collection → centralized processing** a
 
 For full pipeline architecture and core tools, read `references/pipeline_architecture.md`.
 
-For task scheduling, cron triggers, queue model, cross-machine coordination, MRS aggregation gate, and manual pipeline testing, read `references/scheduling_and_tasks.md`.
-
-For input/output file locations per ETL source on deployed servers, read `references/etl_io_reference.md`.
-
 ## Operational Checklists
 
 These checklists are critical to follow when making certain changes. They're documented in `nio-api3/README.md` but summarized here:
