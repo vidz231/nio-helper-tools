@@ -76,6 +76,10 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
 - If another linked worktree already owns `main`, keep this checkout detached at
   `origin/main` with `git checkout --detach origin/main` and preserve unrelated
   local state such as the OMX `.gitignore` entry.
+- During broad Mobileum workspace sweeps, leave nested temp repos whose
+  `remote.origin.fetch` targets a deleted branch as explicit exceptions in the
+  report and automation memory; do not rewrite their fetch ref during a routine
+  clean-start run.
 
 ## SCV Workflows
 
