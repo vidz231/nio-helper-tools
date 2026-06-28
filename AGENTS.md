@@ -67,14 +67,19 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
 ## Default-Branch Sync
 
 - For clean-start or "latest repo" checks in these linked worktrees, verify the
-  live canonical default branch over HTTPS before trusting cached tracking refs:
-  `git ls-remote --symref https://github.com/phutran2495-cpu/nio-helper-tools.git HEAD refs/heads/main`.
-- If the SSH `upstream` remote stalls during fetch, fetch only the canonical
-  branch over HTTPS:
+  live `origin` default branch before trusting cached refs:
+  `git ls-remote --symref origin HEAD refs/heads/main`, then
+  `git fetch origin --prune --tags`.
+- Treat `origin/main` as the practical freshness target for this repo. If the
+  `upstream` mirror is needed and SSH stalls, fetch only that branch over HTTPS:
   `git fetch https://github.com/phutran2495-cpu/nio-helper-tools.git main:refs/remotes/upstream/main`.
 - If another linked worktree already owns `main`, keep this checkout detached at
-  the verified default-branch commit with `git checkout --detach <commit>` and
-  preserve unrelated local state such as the OMX `.gitignore` entry.
+  `origin/main` with `git checkout --detach origin/main` and preserve unrelated
+  local state such as the OMX `.gitignore` entry.
+- During broad Mobileum workspace sweeps, leave nested temp repos whose
+  `remote.origin.fetch` targets a deleted branch as explicit exceptions in the
+  report and automation memory; do not rewrite their fetch ref during a routine
+  clean-start run.
 
 ## SCV Workflows
 
@@ -86,24 +91,12 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
   the pipeline was complete.
 - The SCV validation visualizer is documented in
   `scv-validation-visualizer/README.md`. Its runtime assumptions expect it to
-  run from the `nio-analytics/offline/scv-validation-visualizer` location in the
-  Mobileum source workspace:
+  run from
+  `/Volumes/vidzdatastore/work/mobileum_source/nio-analytics/offline/scv-validation-visualizer`:
   `python3 server.py`, then open `http://127.0.0.1:8765`.
 - Visualizer actions named `Install RPM + Observe` and `Run ETL + Observe`
   mutate pocket hosts. Treat them as remote operational actions, not read-only
   diagnostics.
-=======
-- For clean-start or "latest repo" checks in these linked worktrees, verify the
-  live default branch before trusting cached refs:
-  `git ls-remote --symref origin HEAD refs/heads/main`, then
-  `git fetch origin --prune --tags`. If another linked worktree owns `main`,
-  keep this checkout detached at `origin/main` instead of disturbing that
-  worktree.
-- For the SCV validation visualizer, run
-  `python3 server.py` from
-  `/Volumes/vidzdatastore/work/mobileum_source/nio-analytics/offline/scv-validation-visualizer`
-  and open `http://127.0.0.1:8765`. Treat `Install RPM + Observe` and
-  `Run ETL + Observe` as mutating operations on pocket hosts.
 - To generate fixed-broadband OTTCall IPDR test files from this repo, run
   `python3 generate_fake_fixed_ottcall.py --output-dir ./fake_fixed_ipdr`.
   It writes schema `15109` files named `ipdr_cib_fixed.log.<interval>`; confirm
@@ -129,10 +122,29 @@ This workspace keeps reusable NIO guidance under `.agents/skills`,
   `dscacheutil -q host -a name <host>.niometrics.com`,
   `nc -vz -G 5 <host>.niometrics.com 22`, then
   `ssh -i ~/.ssh/id_rsa phu.tran@<host>.niometrics.com 'hostname && date && id -un'`.
+- For `devserver-sg-10`, the verified VPN-key login probe is
+  `ssh -i /Users/admin/Downloads/VPN/id_rsa phu.tran@devserver-sg-10.niometrics.com 'hostname && date && id -un'`.
 - Before live `conf-edit` work, inspect `/etc/opt/nio/analytics.json` and
   `sudo conf show`; derive the edit path from the deployed JSON instead of
   guessing. Treat `conf-edit`, `conf apply`, and `conf regenerate` as mutating
   unless the user explicitly approved that action.
+
+## PR Review And Publish Flow
+
+- For `mobeande/*` PR review follow-up, read the live review thread first, for
+  example with `gh api graphql`, and decide whether the comment is valid before
+  editing. Fix only the requested reviewer issue unless the user expands scope.
+- For author-sensitive commits or pushes, verify the exact repo and branch with
+  `git status -sb`, confirm the active GitHub account with
+  `gh auth status -h github.com`, set the requested author identity, then check
+  `git show -s --format='author=%an <%ae> committer=%cn <%ce>' HEAD` before
+  pushing.
+- Before squashing or force-pushing a PR branch, refresh to the live remote tip,
+  capture the expected SHA for `--force-with-lease`, and verify the result with
+  `gh pr view <number> --repo <owner>/<repo> --json commits,files,headRefOid`.
+- If local ADE validation is blocked by missing Python deps and the user has
+  approved `devserver-sg-10`, validate there in a temp venv instead of changing
+  the local environment first.
 
 ## OTTCall And DNA-15382 Notes
 
@@ -201,4 +213,3 @@ For Mobileum and NIO tasks in `/Volumes/vidzdatastore/work/mobileum_source`, pre
 
 - Core: `mobileum_coordinator`, `solution_designer`, `solution_auditor`, `mobileum_engineer`, `rbuild_qe`, `rpm_qe`
 - Navigators: `nio_analytics_navigator`, `nio_analytics_c_tools_navigator`, `nio_api3_navigator`, `nio_base_navigator`, `nio_build_deps_navigator`, `nio_python_libs_navigator`, `nio_python3_libs_navigator`, `nio_storage_navigator`, `nio_virtualenv_python_navigator`, `rbuild_navigator`
-
