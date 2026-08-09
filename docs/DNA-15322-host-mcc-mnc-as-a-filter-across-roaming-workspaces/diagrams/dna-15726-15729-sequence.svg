@@ -1,0 +1,242 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1660 1440" role="img" aria-labelledby="title desc">
+  <title id="title">DNA-15726 and DNA-15729 end-to-end sequence</title>
+  <desc id="desc">Sequence from outbound NLive data through RDNA aggregation, database persistence, rollups, alert evaluation, and UI display.</desc>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 L0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.6"/>
+    </pattern>
+    <marker id="arrow-green" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0,10 4,0 8" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-amber" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0,10 4,0 8" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-slate" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0,10 4,0 8" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-rose" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <polygon points="0 0,10 4,0 8" fill="#fb7185"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <style>
+      text { font-family: Arial, sans-serif; }
+      .title { fill:#f8fafc; font-size:34px; font-weight:700; }
+      .subtitle { fill:#94a3b8; font-size:16px; font-weight:500; }
+      .actor { fill:#f8fafc; font-size:15px; font-weight:700; text-anchor:middle; }
+      .actor-sub { fill:#94a3b8; font-size:11px; text-anchor:middle; }
+      .msg { fill:#e2e8f0; font-size:14px; font-weight:600; text-anchor:middle; }
+      .msg-sub { fill:#94a3b8; font-size:11px; text-anchor:middle; }
+      .num { fill:#0f172a; font-size:10px; font-weight:700; text-anchor:middle; }
+      .frame-title { font-size:13px; font-weight:700; }
+      .frame-note { fill:#94a3b8; font-size:12px; font-style:italic; }
+      .note-title { fill:#f8fafc; font-size:14px; font-weight:700; }
+      .note-body { fill:#cbd5e1; font-size:12px; }
+      .legend { fill:#cbd5e1; font-size:12px; font-weight:600; }
+      .lifeline { stroke:#334155; stroke-width:1.5; stroke-dasharray:7 6; }
+      .delivered { stroke:#34d399; stroke-width:2.2; marker-end:url(#arrow-green); }
+      .remaining { stroke:#fbbf24; stroke-width:2.2; marker-end:url(#arrow-amber); }
+      .return { stroke:#94a3b8; stroke-width:1.7; stroke-dasharray:7 5; marker-end:url(#arrow-slate); }
+      .blocked { stroke:#fb7185; stroke-width:2; marker-end:url(#arrow-rose); }
+    </style>
+  </defs>
+
+  <rect width="1660" height="1440" fill="#0f172a"/>
+  <rect width="1660" height="1440" fill="url(#grid)" opacity="0.5"/>
+  <circle cx="1560" cy="60" r="230" fill="#312e81" opacity="0.16"/>
+  <circle cx="40" cy="1340" r="250" fill="#064e3b" opacity="0.10"/>
+
+  <!-- Repository ownership boundaries -->
+  <rect x="20" y="104" width="190" height="1280" rx="12" fill="rgba(8,51,68,.035)" stroke="#22d3ee" stroke-width="1.2" stroke-dasharray="7 5"/>
+  <rect x="20" y="104" width="190" height="24" rx="7" fill="#083344" stroke="#22d3ee"/>
+  <text x="115" y="121" fill="#67e8f9" font-size="11" font-weight="700" text-anchor="middle">UPSTREAM CONTRACT</text>
+
+  <rect x="220" y="104" width="1035" height="1280" rx="12" fill="rgba(6,78,59,.025)" stroke="#34d399" stroke-width="1.2" stroke-dasharray="7 5"/>
+  <rect x="220" y="104" width="1035" height="24" rx="7" fill="#052e16" stroke="#34d399"/>
+  <text x="737" y="121" fill="#86efac" font-size="12" font-weight="700" text-anchor="middle">nio-analytics</text>
+
+  <rect x="1260" y="104" width="380" height="1280" rx="12" fill="rgba(136,19,55,.025)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="7 5"/>
+  <rect x="1260" y="104" width="380" height="24" rx="7" fill="#4c0519" stroke="#fb7185"/>
+  <text x="1450" y="121" fill="#fda4af" font-size="12" font-weight="700" text-anchor="middle">ALERTS CROSS-REPO</text>
+
+  <text x="50" y="55" class="title">Host MCC-MNC desired end-to-end sequence</text>
+  <text x="50" y="84" class="subtitle">Green already landed. Yellow remains assigned. Red marks current missing handoff.</text>
+
+  <!-- Lifelines -->
+  <line x1="110" y1="200" x2="110" y2="1335" class="lifeline"/>
+  <line x1="315" y1="200" x2="315" y2="1335" class="lifeline"/>
+  <line x1="520" y1="200" x2="520" y2="1335" class="lifeline"/>
+  <line x1="725" y1="200" x2="725" y2="1335" class="lifeline"/>
+  <line x1="930" y1="200" x2="930" y2="1335" class="lifeline"/>
+  <line x1="1135" y1="200" x2="1135" y2="1335" class="lifeline"/>
+  <line x1="1340" y1="200" x2="1340" y2="1335" class="lifeline"/>
+  <line x1="1545" y1="200" x2="1545" y2="1335" class="lifeline"/>
+
+  <!-- Actor boxes -->
+  <g filter="url(#shadow)">
+    <rect x="35" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="35" y="130" width="150" height="70" rx="9" fill="rgba(8,51,68,.55)" stroke="#22d3ee" stroke-width="2"/>
+    <text x="110" y="160" class="actor">NLive</text><text x="110" y="180" class="actor-sub">packaged contract only</text>
+    <text x="110" y="195" class="actor-sub">runtime oimm producer unverified</text>
+
+    <rect x="240" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="240" y="130" width="150" height="70" rx="9" fill="rgba(6,78,59,.55)" stroke="#34d399" stroke-width="2"/>
+    <text x="315" y="160" class="actor">RDNA cubes</text><text x="315" y="180" class="actor-sub">aggregation JSON</text>
+
+    <rect x="445" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="445" y="130" width="150" height="70" rx="9" fill="rgba(30,41,59,.65)" stroke="#94a3b8" stroke-width="2"/>
+    <text x="520" y="160" class="actor">Base CSV</text><text x="520" y="180" class="actor-sub">10 combinations</text>
+
+    <rect x="650" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="650" y="130" width="150" height="70" rx="9" fill="rgba(120,53,15,.45)" stroke="#fbbf24" stroke-width="2"/>
+    <text x="725" y="160" class="actor">DB loader</text><text x="725" y="180" class="actor-sub">postgres_insert3</text>
+
+    <rect x="855" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="855" y="130" width="150" height="70" rx="9" fill="rgba(76,29,149,.5)" stroke="#a78bfa" stroke-width="2"/>
+    <text x="930" y="160" class="actor">Analytics DB</text><text x="930" y="180" class="actor-sub">tables + alert ring schema</text>
+
+    <rect x="1060" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="1060" y="130" width="150" height="70" rx="9" fill="rgba(120,53,15,.45)" stroke="#fbbf24" stroke-width="2"/>
+    <text x="1135" y="160" class="actor">DB rollup</text><text x="1135" y="180" class="actor-sub">aggregation_tool3</text>
+
+    <rect x="1265" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="1265" y="130" width="150" height="70" rx="9" fill="rgba(136,19,55,.45)" stroke="#fb7185" stroke-width="2"/>
+    <text x="1340" y="153" class="actor">Alerts config</text>
+    <text x="1340" y="173" class="actor-sub">nio-conf-templates</text>
+    <text x="1340" y="190" class="actor-sub">nio-python3-libs</text>
+
+    <rect x="1470" y="130" width="150" height="70" rx="9" fill="#0f172a"/>
+    <rect x="1470" y="130" width="150" height="70" rx="9" fill="rgba(8,51,68,.55)" stroke="#22d3ee" stroke-width="2"/>
+    <text x="1545" y="153" class="actor">Alerts API / UI</text>
+    <text x="1545" y="173" class="actor-sub">nio-api3</text>
+    <text x="1545" y="190" class="actor-sub">Frontend workspace</text>
+  </g>
+
+  <!-- Delivered frame -->
+  <rect x="55" y="215" width="560" height="290" rx="8" fill="rgba(6,78,59,.10)" stroke="#34d399" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <rect x="55" y="215" width="155" height="27" rx="7" fill="#052e16" stroke="#34d399"/>
+  <text x="132" y="234" fill="#86efac" class="frame-title" text-anchor="middle">DELIVERED</text>
+  <text x="225" y="234" class="frame-note">Merged Analytics foundation</text>
+
+  <!-- 1 -->
+  <circle cx="130" cy="280" r="14" fill="#34d399"/><text x="130" y="284" class="num">1</text>
+  <line x1="110" y1="280" x2="315" y2="280" class="delivered"/>
+  <text x="212" y="252" class="msg">Outbound roaming record</text>
+  <text x="212" y="300" class="msg-sub">Packaged NLive RDNA input: oimm</text>
+  <text x="212" y="320" class="msg-sub">outbound_imsi_mccmnc is historical only</text>
+
+  <!-- 2 self -->
+  <circle cx="335" cy="355" r="14" fill="#34d399"/><text x="335" y="359" class="num">2</text>
+  <path d="M315 355 H390 V390 H315" fill="none" class="delivered"/>
+  <text x="405" y="343" class="msg" text-anchor="start">Preserve internal field</text>
+  <text x="405" y="382" class="msg-sub" text-anchor="start">oimm = MCC-MNC</text>
+
+  <!-- 3 -->
+  <circle cx="335" cy="455" r="14" fill="#34d399"/><text x="335" y="459" class="num">3</text>
+  <line x1="315" y1="455" x2="520" y2="455" class="delivered"/>
+  <text x="417" y="428" class="msg">Write base aggregations</text>
+  <text x="417" y="477" class="msg-sub">CP 5m, UP and Services 30m</text>
+
+  <!-- DNA-15726 frame -->
+  <rect x="470" y="535" width="770" height="405" rx="8" fill="rgba(120,53,15,.10)" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <rect x="470" y="535" width="170" height="27" rx="7" fill="#422006" stroke="#fbbf24"/>
+  <text x="555" y="554" fill="#fcd34d" class="frame-title" text-anchor="middle">DNA-15726</text>
+  <text x="655" y="554" class="frame-note">Option 2A: partitioned sidecar persistence and public compatibility views</text>
+
+  <!-- 4 -->
+  <circle cx="540" cy="605" r="14" fill="#fbbf24"/><text x="540" y="609" class="num">4</text>
+  <line x1="520" y1="605" x2="725" y2="605" class="remaining"/>
+  <text x="622" y="578" class="msg">Scheduler discovers ready file</text>
+  <text x="622" y="627" class="msg-sub">4 files at 5m, 6 files at 30m</text>
+
+  <!-- 5 -->
+  <circle cx="745" cy="680" r="14" fill="#fbbf24"/><text x="745" y="684" class="num">5</text>
+  <line x1="725" y1="680" x2="930" y2="680" class="remaining"/>
+  <text x="827" y="653" class="msg">Insert sidecar base rows</text>
+  <text x="827" y="702" class="msg-sub">oimm included in columns and primary key</text>
+
+  <!-- 6 self DB -->
+  <circle cx="950" cy="755" r="14" fill="#fbbf24"/><text x="950" y="759" class="num">6</text>
+  <path d="M930 755 H995 V790 H930" fill="none" class="remaining"/>
+  <text x="1005" y="735" class="msg" text-anchor="start">Route sidecar partition</text>
+  <text x="1000" y="782" class="msg-sub" text-anchor="start">Keep host networks separate</text>
+
+  <!-- Rollup loop -->
+  <rect x="850" y="820" width="370" height="100" rx="6" fill="rgba(30,41,59,.18)" stroke="#64748b" stroke-dasharray="5 4"/>
+  <rect x="850" y="820" width="54" height="22" rx="5" fill="#1e293b" stroke="#64748b"/>
+  <text x="877" y="836" fill="#cbd5e1" font-size="11" font-weight="700" text-anchor="middle">loop</text>
+  <text x="915" y="836" class="frame-note">hour, day, month</text>
+  <circle cx="1155" cy="866" r="14" fill="#fbbf24"/><text x="1155" y="870" class="num">7</text>
+  <line x1="1135" y1="866" x2="930" y2="866" class="remaining"/>
+  <text x="1032" y="846" class="msg">Read grouped by oimm</text>
+  <line x1="930" y1="900" x2="1135" y2="900" class="return"/>
+  <text x="1032" y="918" class="msg-sub">Write rollups and expose public views</text>
+
+  <!-- DNA-15729 frame -->
+  <rect x="470" y="970" width="1150" height="390" rx="8" fill="rgba(136,19,55,.08)" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="8 5"/>
+  <rect x="470" y="970" width="170" height="27" rx="7" fill="#4c0519" stroke="#fb7185"/>
+  <text x="555" y="989" fill="#fda4af" class="frame-title" text-anchor="middle">DNA-15729</text>
+  <text x="655" y="989" class="frame-note">Current gap: shared templates and dimension plumbing missing</text>
+
+  <!-- Cross-repo change ownership -->
+  <g filter="url(#shadow)">
+    <rect x="500" y="1015" width="755" height="130" rx="9" fill="#0f172a"/>
+    <rect x="500" y="1015" width="755" height="130" rx="9" fill="rgba(30,41,59,.72)" stroke="#64748b" stroke-width="1.3"/>
+    <text x="525" y="1041" class="note-title">DNA-15729 change ownership</text>
+    <text x="525" y="1068" class="note-body"><tspan font-weight="700" fill="#fda4af">nio-conf-templates</tspan>: shared templates + nio-alerts include</text>
+    <text x="525" y="1095" class="note-body"><tspan font-weight="700" fill="#c4b5fd">nio-python3-libs</tspan>: supported dimension + d_ mapping</text>
+    <text x="525" y="1122" class="note-body"><tspan font-weight="700" fill="#86efac">nio-analytics</tspan>: alerts_rings.d_oimm migration</text>
+    <text x="900" y="1068" class="note-body"><tspan font-weight="700" fill="#67e8f9">nio-api3</tspan>: info mapping + availability/API contract</text>
+    <text x="900" y="1095" class="note-body"><tspan font-weight="700" fill="#67e8f9">Frontend</tspan>: outbound-only selection + display label</text>
+    <text x="900" y="1122" class="note-body"><tspan font-weight="700" fill="#94a3b8">Runtime</tspan>: packaged oimm producer emission is unverified</text>
+  </g>
+
+  <!-- 8 -->
+  <circle cx="1565" cy="1040" r="14" fill="#fbbf24"/><text x="1565" y="1044" class="num">8</text>
+  <line x1="1545" y1="1040" x2="1340" y2="1040" class="remaining"/>
+  <text x="1442" y="1013" class="msg">Create alert rule</text>
+  <text x="1442" y="1062" class="msg-sub">host_mcc_mnc=311-480, roaming_direction=OUTBOUND</text>
+
+  <!-- 9 self Alerts -->
+  <circle cx="1360" cy="1100" r="14" fill="#fbbf24"/><text x="1360" y="1104" class="num">9</text>
+  <path d="M1340 1100 H1400 V1135 H1340" fill="none" class="remaining"/>
+  <text x="1410" y="1083" class="msg" text-anchor="start">Render shared template</text>
+  <text x="1405" y="1127" class="msg-sub" text-anchor="start">Map oimm to public Host Network</text>
+
+  <!-- 10 Alerts reads file -->
+  <circle cx="1360" cy="1175" r="14" fill="#fbbf24"/><text x="1360" y="1179" class="num">10</text>
+  <line x1="1340" y1="1175" x2="520" y2="1175" class="remaining"/>
+  <text x="930" y="1148" class="msg">Read configured native or hourly host file</text>
+  <line x1="520" y1="1208" x2="1340" y2="1208" class="return"/>
+  <text x="930" y="1222" class="msg-sub">Rows grouped by oimm plus KPI metrics</text>
+
+  <!-- 11 persist + 12 return -->
+  <circle cx="1360" cy="1260" r="14" fill="#fbbf24"/><text x="1360" y="1264" class="num">11</text>
+  <line x1="1340" y1="1260" x2="930" y2="1260" class="remaining"/>
+  <text x="1135" y="1240" class="msg">Threshold breached: persist alert ring</text>
+  <text x="1135" y="1282" class="msg-sub">d_oimm = 311-480, API alias d_host_mcc_mnc</text>
+
+  <circle cx="1360" cy="1330" r="14" fill="#fbbf24"/><text x="1360" y="1334" class="num">12</text>
+  <line x1="1340" y1="1330" x2="1545" y2="1330" class="remaining"/>
+  <text x="1442" y="1308" class="msg">Return alert</text>
+  <text x="1442" y="1352" class="msg-sub">Display Verizon (311-480)</text>
+
+  <!-- Outbound-only note -->
+  <g filter="url(#shadow)">
+    <rect x="55" y="1025" width="360" height="118" rx="10" fill="#0f172a"/>
+    <rect x="55" y="1025" width="360" height="118" rx="10" fill="rgba(136,19,55,.35)" stroke="#fb7185" stroke-width="1.5"/>
+    <text x="78" y="1055" class="note-title">Outbound-only guard</text>
+    <text x="78" y="1083" class="note-body">If roaming_direction is not OUTBOUND:</text>
+    <text x="78" y="1107" class="note-body">Host Network unavailable. Rule rejected.</text>
+    <text x="78" y="1130" class="note-body">No host-scoped data or alert returned.</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(55 1400)">
+    <line x1="0" y1="0" x2="55" y2="0" class="delivered"/><text x="70" y="5" class="legend">landed</text>
+    <line x1="180" y1="0" x2="235" y2="0" class="remaining"/><text x="250" y="5" class="legend">remaining work</text>
+    <line x1="410" y1="0" x2="465" y2="0" class="return"/><text x="480" y="5" class="legend">data / response</text>
+    <rect x="660" y="-13" width="18" height="18" rx="3" fill="rgba(136,19,55,.45)" stroke="#fb7185"/><text x="690" y="5" class="legend">guard or missing handoff</text>
+  </g>
+</svg>

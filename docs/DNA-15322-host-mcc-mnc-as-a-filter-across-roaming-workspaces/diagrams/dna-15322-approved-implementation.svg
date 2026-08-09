@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1080" role="img" aria-labelledby="title desc">
+  <title id="title">DNA-15322 approved cross-repository implementation</title>
+  <desc id="desc">Repository-boundary architecture for approved Option 2A partitioned sidecar persistence and public views, approved Option 3A observed-only outbound enumeration, and the DNA-15729 Alerts story.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .title { font-family:Arial, sans-serif; fill:#f8fafc; font-size:38px; font-weight:700; }
+      .subtitle { font-family:Arial, sans-serif; fill:#94a3b8; font-size:17px; font-weight:500; }
+      .boundary { font-family:Arial, sans-serif; fill:#e2e8f0; font-size:15px; font-weight:700; letter-spacing:.6px; }
+      .box-title { font-family:Arial, sans-serif; fill:#f8fafc; font-size:20px; font-weight:700; }
+      .body { font-family:Arial, sans-serif; fill:#cbd5e1; font-size:15px; font-weight:500; }
+      .small { font-family:Arial, sans-serif; fill:#94a3b8; font-size:13px; font-weight:500; }
+      .badge { font-family:Arial, sans-serif; font-size:13px; font-weight:700; }
+      .flow { fill:none; stroke:#94a3b8; stroke-width:3; marker-end:url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1080" fill="url(#background)"/>
+  <circle cx="1500" cy="70" r="220" fill="#4338ca" opacity=".10"/>
+  <circle cx="80" cy="1010" r="240" fill="#047857" opacity=".08"/>
+
+  <text x="70" y="66" class="title">Host Network approved implementation</text>
+  <text x="70" y="100" class="subtitle">DNA-15726 Option 2A persistence + DNA-15727 Option 3A enumeration + DNA-15729 Alerts story</text>
+
+  <g transform="translate(70 126)">
+    <rect width="225" height="42" rx="21" fill="#052e16" stroke="#22c55e"/>
+    <circle cx="22" cy="21" r="6" fill="#22c55e"/>
+    <text x="39" y="27" class="badge" fill="#86efac">GREEN - NEW LOGIC</text>
+  </g>
+  <g transform="translate(315 126)">
+    <rect width="255" height="42" rx="21" fill="#422006" stroke="#f59e0b"/>
+    <circle cx="22" cy="21" r="6" fill="#f59e0b"/>
+    <text x="39" y="27" class="badge" fill="#fcd34d">YELLOW - MODIFIED LOGIC</text>
+  </g>
+  <g transform="translate(590 126)">
+    <rect width="250" height="42" rx="21" fill="#450a0a" stroke="#ef4444"/>
+    <circle cx="22" cy="21" r="6" fill="#ef4444"/>
+    <text x="39" y="27" class="badge" fill="#fca5a5">RED - REJECTED LOGIC</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="205" width="250" height="650" rx="18" fill="#111827" stroke="#64748b" stroke-width="2"/>
+    <rect x="70" y="205" width="250" height="38" rx="12" fill="#1e293b"/>
+    <text x="195" y="230" class="boundary" text-anchor="middle">UPSTREAM CONTRACT</text>
+    <text x="98" y="285" class="box-title">NLive and cubes</text>
+    <text x="98" y="322" class="body">Packaged NLive RDNA input</text>
+    <text x="98" y="350" class="small" font-family="Menlo, monospace">oimm</text>
+    <text x="98" y="400" class="body">Current packaged field: oimm</text>
+    <text x="98" y="430" class="small">CP and Segment CP: 5m</text>
+    <text x="98" y="456" class="small">UP and Segment UP: 30m</text>
+    <text x="98" y="482" class="small">Services families: 30m</text>
+    <rect x="95" y="525" width="200" height="98" rx="12" fill="#1e293b" stroke="#64748b"/>
+    <text x="115" y="557" class="body">Stable raw value</text>
+    <text x="115" y="589" class="box-title" font-family="Menlo, monospace">311-480</text>
+    <text x="98" y="670" class="small">outbound_imsi_mccmnc:</text>
+    <text x="98" y="694" class="small">historical pre-rename field only</text>
+    <text x="98" y="734" class="small">Runtime producer emission of</text>
+    <text x="98" y="758" class="small">packaged oimm is unverified.</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="355" y="205" width="460" height="650" rx="18" fill="#071b13" stroke="#22c55e" stroke-width="2"/>
+    <rect x="355" y="205" width="460" height="38" rx="12" fill="#052e16"/>
+    <text x="585" y="230" class="boundary" text-anchor="middle" fill="#86efac">nio-analytics</text>
+    <text x="385" y="282" class="box-title">DNA-15726 - Option 2A persistence</text>
+    <text x="385" y="316" class="body">10 partitioned sidecar tables and loaders</text>
+    <text x="385" y="344" class="body">Public compatibility views and DB rollups</text>
+    <text x="385" y="372" class="body">retention and tablespace registration</text>
+    <line x1="385" y1="400" x2="785" y2="400" stroke="#14532d"/>
+    <text x="385" y="442" class="box-title">DNA-15727 - new Option 3A producer</text>
+    <text x="385" y="476" class="body">Discover observed outbound oimm values</text>
+    <text x="385" y="504" class="body">Resolve using the existing MCC-MNC map</text>
+    <text x="385" y="532" class="body">Known: Verizon (311-480)</text>
+    <text x="385" y="560" class="body">Unknown: Unknown (&lt;raw&gt;)</text>
+    <text x="385" y="588" class="body">Persist parent roaming_direction=OUTBOUND</text>
+    <line x1="385" y1="616" x2="785" y2="616" stroke="#14532d"/>
+    <text x="385" y="658" class="box-title">DNA-15729 - new persistence</text>
+    <text x="385" y="692" class="body">Alert-ring Host Network dimension migration</text>
+    <text x="385" y="720" class="body">Keep raw oimm at file ingestion</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="850" y="205" width="340" height="650" rx="18" fill="#201706" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="850" y="205" width="340" height="38" rx="12" fill="#422006"/>
+    <text x="1020" y="230" class="boundary" text-anchor="middle" fill="#fcd34d">nio-api3</text>
+    <text x="880" y="282" class="box-title">Modified API schemas</text>
+    <text x="880" y="316" class="body">Add all Host table combinations</text>
+    <text x="880" y="344" class="body">Map public filter to raw oimm files</text>
+    <line x1="880" y1="375" x2="1160" y2="375" stroke="#78350f"/>
+    <text x="880" y="417" class="box-title">Modified enumeration API</text>
+    <text x="880" y="451" class="body">Allow host_mcc_mnc</text>
+    <text x="880" y="479" class="body">Require roaming_direction=OUTBOUND</text>
+    <text x="880" y="507" class="body">Return raw plus resolved values</text>
+    <line x1="880" y1="538" x2="1160" y2="538" stroke="#78350f"/>
+    <text x="880" y="580" class="box-title">Modified Alerts API</text>
+    <text x="880" y="614" class="body">Advertise configured combinations</text>
+    <text x="880" y="642" class="body">Validate Host Network rules</text>
+    <text x="880" y="670" class="body">Keep product label Host Network</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1225" y="205" width="305" height="650" rx="18" fill="#111827" stroke="#a78bfa" stroke-width="2"/>
+    <rect x="1225" y="205" width="305" height="38" rx="12" fill="#312e81"/>
+    <text x="1377" y="230" class="boundary" text-anchor="middle">ALERTS RUNTIME</text>
+    <rect x="1255" y="272" width="245" height="184" rx="13" fill="#071b13" stroke="#22c55e"/>
+    <text x="1275" y="306" class="box-title">nio-conf-templates</text>
+    <text x="1275" y="340" class="body">New shared templates</text>
+    <text x="1275" y="368" class="body">New deployment flag</text>
+    <text x="1275" y="396" class="small">rdna.host_mcc_mnc.enabled</text>
+    <text x="1275" y="424" class="small">default false</text>
+    <rect x="1255" y="484" width="245" height="142" rx="13" fill="#201706" stroke="#f59e0b"/>
+    <text x="1275" y="518" class="box-title">nio-python3-libs</text>
+    <text x="1275" y="552" class="body">Modify supported dimensions</text>
+    <text x="1275" y="580" class="body">Persist the Host Network key</text>
+    <rect x="1255" y="654" width="245" height="154" rx="13" fill="#201706" stroke="#f59e0b"/>
+    <text x="1275" y="688" class="box-title">Template include path</text>
+    <text x="1275" y="722" class="body">Modify nio-alerts.json</text>
+    <text x="1275" y="750" class="body">Guard with RDNA + flag</text>
+    <text x="1275" y="778" class="body">Preserve valid JSON commas</text>
+  </g>
+
+  <path d="M320 520 H355" class="flow"/>
+  <path d="M815 520 H850" class="flow"/>
+  <path d="M1190 520 H1225" class="flow"/>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="895" width="1460" height="155" rx="16" fill="#22090b" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="98" y="932" class="box-title" fill="#fecaca">Rejected by the approved design</text>
+    <text x="98" y="966" class="body">1. Do not advertise the full MCC-MNC dictionary when no Analytics rows exist.</text>
+    <text x="98" y="997" class="body">2. Do not enable Host Network Alerts without an explicit deployment flag.</text>
+    <text x="98" y="1028" class="body">3. Do not expose oimm as the user-facing label.</text>
+  </g>
+</svg>

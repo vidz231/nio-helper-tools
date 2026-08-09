@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1320" role="img" aria-labelledby="title desc">
+  <title id="title">DNA-15726, DNA-15727, and DNA-15729 remaining work</title>
+  <desc id="desc">Architecture map showing delivered Host MCC-MNC cube outputs and the missing database, enumeration, and alerts consumption layers.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#22c55e"/>
+    </marker>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 40px; font-weight: 700; fill: #f8fafc; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 18px; font-weight: 500; fill: #94a3b8; }
+      .section { font-family: Arial, sans-serif; font-size: 19px; font-weight: 700; fill: #e2e8f0; letter-spacing: .7px; }
+      .box-title { font-family: Arial, sans-serif; font-size: 21px; font-weight: 700; fill: #f8fafc; }
+      .body { font-family: Arial, sans-serif; font-size: 16px; font-weight: 500; fill: #cbd5e1; }
+      .small { font-family: Arial, sans-serif; font-size: 14px; font-weight: 500; fill: #94a3b8; }
+      .badge { font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; }
+      .mono { font-family: Menlo, monospace; font-size: 15px; font-weight: 600; fill: #dbeafe; }
+      .connector { fill: none; stroke: #64748b; stroke-width: 3; marker-end: url(#arrow); }
+      .new-connector { fill: none; stroke: #22c55e; stroke-width: 3; marker-end: url(#arrowGreen); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1320" fill="url(#bg)"/>
+  <circle cx="1490" cy="90" r="220" fill="#4338ca" opacity="0.08"/>
+  <circle cx="120" cy="1250" r="260" fill="#0284c7" opacity="0.06"/>
+
+  <text x="80" y="82" class="title">Host MCC-MNC roaming delivery map</text>
+  <text x="80" y="118" class="subtitle">DNA-15726 owns DB data. DNA-15727 owns enumeration discovery. DNA-15729 owns Alerts consumption.</text>
+  <rect x="80" y="140" width="1440" height="4" rx="2" fill="url(#header)"/>
+
+  <g transform="translate(80 178)">
+    <rect width="285" height="46" rx="23" fill="#052e16" stroke="#22c55e" stroke-width="1.5"/>
+    <circle cx="25" cy="23" r="7" fill="#22c55e"/>
+    <text x="44" y="29" class="badge" fill="#86efac">GREEN - DELIVERED</text>
+  </g>
+  <g transform="translate(385 178)">
+    <rect width="310" height="46" rx="23" fill="#422006" stroke="#f59e0b" stroke-width="1.5"/>
+    <circle cx="25" cy="23" r="7" fill="#f59e0b"/>
+    <text x="44" y="29" class="badge" fill="#fcd34d">YELLOW - JOB TO BUILD</text>
+  </g>
+  <g transform="translate(715 178)">
+    <rect width="300" height="46" rx="23" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+    <circle cx="25" cy="23" r="7" fill="#ef4444"/>
+    <text x="44" y="29" class="badge" fill="#fca5a5">RED - CURRENT GAP</text>
+  </g>
+
+  <text x="80" y="280" class="section">SOURCE AND FILE PRODUCTION</text>
+  <g filter="url(#shadow)">
+    <rect x="80" y="305" width="310" height="170" rx="18" fill="#0f2f24" stroke="#22c55e" stroke-width="2"/>
+    <text x="108" y="345" class="box-title">NLive packaged contract</text>
+    <text x="108" y="380" class="body">Packaged NLive RDNA input</text>
+    <text x="108" y="410" class="small" font-family="Menlo, monospace">oimm</text>
+    <text x="108" y="440" class="small">historical only: outbound_imsi_mccmnc</text>
+    <text x="108" y="466" class="small">Runtime producer emission of oimm is unverified.</text>
+
+    <rect x="490" y="285" width="480" height="210" rx="18" fill="#0f2f24" stroke="#22c55e" stroke-width="2"/>
+    <text x="518" y="326" class="box-title">10 base aggregation combinations</text>
+    <text x="518" y="362" class="body">CP: 2 at 5m</text>
+    <text x="518" y="392" class="body">Segment CP: 2 at 5m</text>
+    <text x="518" y="422" class="body">UP: 2 and Segment UP: 2 at 30m</text>
+    <text x="518" y="452" class="body">Services: 1 and Segment Services: 1 at 30m</text>
+    <text x="518" y="480" class="small">Delivered by the merged Analytics work</text>
+
+    <rect x="1070" y="305" width="450" height="170" rx="18" fill="#0f2f24" stroke="#22c55e" stroke-width="2"/>
+    <text x="1098" y="345" class="box-title">CSV files on disk</text>
+    <text x="1098" y="380" class="body">Metrics can now be grouped by host network.</text>
+    <text x="1098" y="414" class="body">Some UP and Services alert rollup files exist.</text>
+    <text x="1098" y="448" class="small">This is the end of the delivered layer.</text>
+  </g>
+  <path d="M390 390 C430 390 450 390 490 390" class="new-connector"/>
+  <path d="M970 390 C1010 390 1030 390 1070 390" class="new-connector"/>
+
+  <text x="80" y="570" class="section">REMAINING CONSUMPTION LAYERS</text>
+  <g filter="url(#shadow)">
+    <rect x="80" y="600" width="690" height="330" rx="20" fill="#221a08" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="105" y="625" width="170" height="30" rx="15" fill="#450a0a"/>
+    <text x="126" y="646" class="badge" fill="#fca5a5">DNA-15726 GAP</text>
+    <text x="108" y="700" class="box-title">Analytics DB persistence and rollups</text>
+    <text x="108" y="742" class="body">1. Create 10 partitioned sidecar PostgreSQL tables.</text>
+    <text x="108" y="776" class="body">2. Add public views and keep oimm in each grouping key.</text>
+    <text x="108" y="810" class="body">3. Load 4 CP files at 5m and 6 files at 30m.</text>
+    <text x="108" y="844" class="body">4. Roll up each table to hour, day, and month.</text>
+    <text x="108" y="878" class="body">5. Add retention configuration and E2E reconciliation.</text>
+    <text x="108" y="912" class="small">Current repo has no host table migrations, DB loaders, rollups, or focused tests.</text>
+
+    <rect x="830" y="600" width="690" height="330" rx="20" fill="#221a08" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="855" y="625" width="170" height="30" rx="15" fill="#450a0a"/>
+    <text x="876" y="646" class="badge" fill="#fca5a5">DNA-15729 GAP</text>
+    <text x="858" y="700" class="box-title">Alerts configuration and dimension plumbing</text>
+    <text x="858" y="742" class="body">1. Create new shared host-network alert templates.</text>
+    <text x="858" y="776" class="body">2. Include them in nio-alerts.json.tmpl.</text>
+    <text x="858" y="810" class="body">3. Persist d_oimm and expose public d_host_mcc_mnc.</text>
+    <text x="858" y="844" class="body">4. Map internal oimm to public Host Network naming.</text>
+    <text x="858" y="878" class="body">5. Require roaming_direction=OUTBOUND and valid JSON.</text>
+    <text x="858" y="912" class="small">Current alert templates and supported-dimension maps have no host-network entry.</text>
+  </g>
+  <path d="M1295 475 C1295 525 425 525 425 600" class="connector"/>
+  <path d="M1295 475 C1295 535 1175 535 1175 600" class="connector"/>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="965" width="1440" height="180" rx="20" fill="#221a08" stroke="#f59e0b" stroke-width="2"/>
+    <rect x="105" y="990" width="170" height="30" rx="15" fill="#450a0a"/>
+    <text x="126" y="1011" class="badge" fill="#fca5a5">DNA-15727 GAP</text>
+    <text x="108" y="1060" class="box-title">Host Network enumeration discovery and resolution</text>
+    <text x="108" y="1098" class="body">Option 3A: discover oimm only for roaming_direction=OUTBOUND, resolve, and persist it.</text>
+    <text x="108" y="1128" class="body">nio-api3: allow host_mcc_mnc with roaming_direction parent and return raw plus resolved values.</text>
+    <text x="1010" y="1060" class="small">Current gap</text>
+    <text x="1010" y="1090" class="small">No Host-specific producer.</text>
+    <text x="1010" y="1120" class="small">No dynamic API allowlist entry.</text>
+  </g>
+  <path d="M1450 475 C1520 500 1565 525 1565 600 L1565 930 Q1565 947 1548 947 H817 Q800 947 800 965" class="connector"/>
+
+  <g transform="translate(80 1185)">
+    <rect width="1440" height="92" rx="16" fill="#172554" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="28" y="31" class="box-title">Good outcome</text>
+    <text x="205" y="31" class="body">A user selects Verizon (311-480) for outbound roaming and sees correct KPIs or alerts,</text>
+    <text x="205" y="56" class="body">with totals reconciling from base files through DB rollups and alert persistence.</text>
+    <text x="205" y="81" class="body">The filter list contains only queryable Host Networks and keeps the stable raw MCC-MNC value.</text>
+  </g>
+</svg>

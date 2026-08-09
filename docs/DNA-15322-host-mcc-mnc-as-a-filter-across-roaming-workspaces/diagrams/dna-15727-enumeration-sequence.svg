@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1350" role="img" aria-labelledby="title desc">
+  <title id="title">DNA-15727 Host MCC-MNC enumeration sequence</title>
+  <desc id="desc">Repository-grouped sequence showing Analytics discovery and resolution of observed Host MCC-MNC values, followed by API delivery to roaming consumers.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="header" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#60a5fa"/>
+    </marker>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 38px; font-weight: 700; fill: #f8fafc; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 17px; font-weight: 500; fill: #94a3b8; }
+      .boundary { font-family: Arial, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1px; }
+      .actor { font-family: Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #f8fafc; text-anchor: middle; }
+      .actor-small { font-family: Arial, sans-serif; font-size: 13px; font-weight: 500; fill: #a5b4fc; text-anchor: middle; }
+      .frame-title { font-family: Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #f8fafc; }
+      .body { font-family: Arial, sans-serif; font-size: 15px; font-weight: 500; fill: #dbeafe; }
+      .small { font-family: Arial, sans-serif; font-size: 13px; font-weight: 500; fill: #94a3b8; }
+      .step { font-family: Arial, sans-serif; font-size: 13px; font-weight: 700; fill: #07111f; text-anchor: middle; }
+      .lifeline { stroke: #475569; stroke-width: 2; stroke-dasharray: 8 8; }
+      .new-call { fill: none; stroke: #22c55e; stroke-width: 3; marker-end: url(#arrowGreen); }
+      .return-call { fill: none; stroke: #60a5fa; stroke-width: 2.5; stroke-dasharray: 8 6; marker-end: url(#arrowBlue); }
+      .self-call { fill: none; stroke: #22c55e; stroke-width: 3; marker-end: url(#arrowGreen); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1350" fill="url(#bg)"/>
+  <circle cx="1490" cy="90" r="220" fill="#4338ca" opacity="0.08"/>
+  <circle cx="100" cy="1260" r="260" fill="#0284c7" opacity="0.06"/>
+
+  <text x="60" y="68" class="title">DNA-15727 - Host Network enumeration flow</text>
+  <text x="60" y="103" class="subtitle">New work discovers queryable outbound MCC-MNC values, resolves labels, and exposes them through the dynamic API.</text>
+  <rect x="60" y="125" width="1480" height="4" rx="2" fill="url(#header)"/>
+
+  <g>
+    <rect x="25" y="155" width="955" height="1140" rx="22" fill="#0c1f2f" stroke="#38bdf8" stroke-width="2" opacity="0.72"/>
+    <text x="48" y="183" class="boundary" fill="#7dd3fc">NIO-ANALYTICS</text>
+
+    <rect x="995" y="155" width="390" height="1140" rx="22" fill="#181c35" stroke="#818cf8" stroke-width="2" opacity="0.72"/>
+    <text x="1018" y="183" class="boundary" fill="#a5b4fc">NIO-API3</text>
+
+    <rect x="1400" y="155" width="175" height="1140" rx="22" fill="#1f1a12" stroke="#f59e0b" stroke-width="2" opacity="0.72"/>
+    <text x="1423" y="183" class="boundary" fill="#fcd34d">CONSUMER UI</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="70" y="205" width="190" height="82" rx="15" fill="#102b3c" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="165" y="240" class="actor">Host DB tables</text>
+    <text x="165" y="263" class="actor-small">DNA-15726 dependency</text>
+
+    <rect x="295" y="205" width="190" height="82" rx="15" fill="#12301f" stroke="#22c55e" stroke-width="2"/>
+    <text x="390" y="240" class="actor">enumerator3</text>
+    <text x="390" y="263" class="actor-small">new Host definition</text>
+
+    <rect x="520" y="205" width="190" height="82" rx="15" fill="#102b3c" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="615" y="240" class="actor">MCC-MNC data</text>
+    <text x="615" y="263" class="actor-small">existing dictionary</text>
+
+    <rect x="745" y="205" width="190" height="82" rx="15" fill="#102b3c" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="840" y="240" class="actor">enumerations DB</text>
+    <text x="840" y="263" class="actor-small">existing storage</text>
+
+    <rect x="1055" y="205" width="190" height="82" rx="15" fill="#192245" stroke="#22c55e" stroke-width="2"/>
+    <text x="1150" y="240" class="actor">Dynamic enum API</text>
+    <text x="1150" y="263" class="actor-small">new allowlist entry</text>
+
+    <rect x="1415" y="205" width="145" height="82" rx="15" fill="#30240d" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="1487" y="240" class="actor">Roaming UI</text>
+    <text x="1487" y="263" class="actor-small">filters and alerts</text>
+  </g>
+
+  <line x1="165" y1="287" x2="165" y2="1260" class="lifeline"/>
+  <line x1="390" y1="287" x2="390" y2="1260" class="lifeline"/>
+  <line x1="615" y1="287" x2="615" y2="1260" class="lifeline"/>
+  <line x1="840" y1="287" x2="840" y2="1260" class="lifeline"/>
+  <line x1="1150" y1="287" x2="1150" y2="1260" class="lifeline"/>
+  <line x1="1487" y1="287" x2="1487" y2="1260" class="lifeline"/>
+
+  <g>
+    <rect x="50" y="320" width="900" height="190" rx="15" fill="#0f2f24" stroke="#22c55e" stroke-width="1.5" opacity="0.92"/>
+    <rect x="68" y="338" width="300" height="30" rx="15" fill="#052e16" stroke="#22c55e"/>
+    <text x="88" y="359" class="frame-title">Prerequisite: DNA-15726 Option 2A</text>
+    <text x="85" y="405" class="body">Partitioned sidecar tables and public views contain canonical <tspan font-family="Menlo, monospace">oimm</tspan> values.</text>
+    <text x="85" y="439" class="body">Rows remain separated by physical Host Network and keep roaming direction.</text>
+    <text x="85" y="469" class="small">historical only: outbound_imsi_mccmnc.</text>
+    <text x="85" y="493" class="small">Runtime producer emission of packaged oimm is unverified.</text>
+  </g>
+
+  <g>
+    <rect x="50" y="535" width="900" height="465" rx="15" fill="#162415" stroke="#22c55e" stroke-width="2" opacity="0.92"/>
+    <rect x="68" y="553" width="370" height="30" rx="15" fill="#052e16" stroke="#22c55e"/>
+    <text x="88" y="574" class="frame-title">DNA-15727 Option 3A: Analytics producer</text>
+
+    <path d="M390 610 h62 v42 h-62" class="self-call"/>
+    <circle cx="390" cy="610" r="14" fill="#22c55e"/>
+    <text x="390" y="615" class="step">1</text>
+    <text x="470" y="632" class="body">Scheduled Host enumeration starts</text>
+
+    <path d="M390 690 H165" class="new-call"/>
+    <circle cx="390" cy="690" r="14" fill="#22c55e"/>
+    <text x="390" y="695" class="step">2</text>
+    <text x="278" y="680" class="body" text-anchor="middle">Distinct oimm where roaming_direction=OUTBOUND</text>
+
+    <path d="M165 750 H390" class="return-call"/>
+    <circle cx="165" cy="750" r="14" fill="#60a5fa"/>
+    <text x="165" y="755" class="step">3</text>
+    <text x="278" y="740" class="body" text-anchor="middle">311-480, 310-260</text>
+
+    <path d="M390 810 H615" class="new-call"/>
+    <circle cx="390" cy="810" r="14" fill="#22c55e"/>
+    <text x="390" y="815" class="step">4</text>
+    <text x="502" y="800" class="body" text-anchor="middle">Resolve network name</text>
+
+    <path d="M615 870 H390" class="return-call"/>
+    <circle cx="615" cy="870" r="14" fill="#60a5fa"/>
+    <text x="615" y="875" class="step">5</text>
+    <text x="502" y="860" class="body" text-anchor="middle">Verizon</text>
+
+    <path d="M390 930 H840" class="new-call"/>
+    <circle cx="390" cy="930" r="14" fill="#22c55e"/>
+    <text x="390" y="935" class="step">6</text>
+    <text x="615" y="918" class="body" text-anchor="middle">Upsert raw, resolved, and OUTBOUND parent</text>
+    <text x="615" y="952" class="small" text-anchor="middle">value=311-480 | value_resolved=Verizon (311-480)</text>
+
+    <rect x="70" y="969" width="860" height="22" rx="11" fill="#450a0a" stroke="#ef4444"/>
+    <text x="500" y="985" class="small" fill="#fca5a5" text-anchor="middle">Do not replace this observed-value flow with the existing roaming_plmn operator dictionary endpoint.</text>
+  </g>
+
+  <g>
+    <rect x="1015" y="535" width="350" height="465" rx="15" fill="#172554" stroke="#22c55e" stroke-width="2" opacity="0.92"/>
+    <rect x="1033" y="553" width="315" height="30" rx="15" fill="#052e16" stroke="#22c55e"/>
+    <text x="1053" y="574" class="frame-title">DNA-15727 Option 3A: API consumption</text>
+    <text x="1045" y="628" class="body">Add <tspan font-family="Menlo, monospace">host_mcc_mnc</tspan> to the parent-aware allowlist.</text>
+    <text x="1045" y="662" class="body">Required parent: <tspan font-family="Menlo, monospace">roaming_direction=OUTBOUND</tspan></text>
+    <text x="1045" y="750" class="small">Existing dynamic API behavior remains:</text>
+    <text x="1045" y="782" class="small">search, pagination, availability, raw value, resolved value</text>
+    <rect x="1035" y="830" width="310" height="118" rx="12" fill="#0f172a" stroke="#818cf8"/>
+    <text x="1050" y="864" class="body">Public key: <tspan font-family="Menlo, monospace">host_mcc_mnc</tspan></text>
+    <text x="1050" y="898" class="body">Stable filter value: <tspan font-family="Menlo, monospace">311-480</tspan></text>
+    <text x="1050" y="932" class="body">Display: Verizon (311-480)</text>
+  </g>
+
+  <g>
+    <rect x="1015" y="1025" width="540" height="210" rx="15" fill="#162415" stroke="#22c55e" stroke-width="2" opacity="0.92"/>
+    <rect x="1033" y="1043" width="210" height="30" rx="15" fill="#052e16" stroke="#22c55e"/>
+    <text x="1053" y="1064" class="frame-title">Runtime filter request</text>
+
+    <path d="M1487 1100 H1150" class="new-call"/>
+    <circle cx="1487" cy="1100" r="14" fill="#22c55e"/>
+    <text x="1487" y="1105" class="step">7</text>
+    <text x="1318" y="1090" class="body" text-anchor="middle">GET host_mcc_mnc, parent OUTBOUND</text>
+
+    <path d="M1150 1150 H840" class="new-call"/>
+    <circle cx="1150" cy="1150" r="14" fill="#22c55e"/>
+    <text x="1150" y="1155" class="step">8</text>
+    <text x="995" y="1140" class="body" text-anchor="middle">Query stored enumeration</text>
+
+    <path d="M840 1195 H1150" class="return-call"/>
+    <circle cx="840" cy="1195" r="14" fill="#60a5fa"/>
+    <text x="840" y="1200" class="step">9</text>
+    <path d="M1150 1218 H1487" class="return-call"/>
+    <circle cx="1150" cy="1218" r="14" fill="#60a5fa"/>
+    <text x="1150" y="1223" class="step">10</text>
+    <text x="1318" y="1208" class="body" text-anchor="middle">311-480 plus resolved label</text>
+  </g>
+
+  <g transform="translate(60 1310)">
+    <circle cx="8" cy="0" r="7" fill="#22c55e"/>
+    <text x="24" y="5" class="small">New DNA-15727 logic</text>
+    <circle cx="220" cy="0" r="7" fill="#60a5fa"/>
+    <text x="236" y="5" class="small">Existing reusable mechanism or response</text>
+  </g>
+</svg>
